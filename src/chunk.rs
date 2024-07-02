@@ -74,7 +74,7 @@ impl Chunk {
         container
     }
 
-    fn new(chunk_type: ChunkType, data: Vec<u8>) -> Chunk {
+    pub fn new(chunk_type: ChunkType, data: Vec<u8>) -> Chunk {
         Chunk {
             length: data.len() as u32,
             crc: CRC.checksum(Self::get_bytes_for_crc(&chunk_type, &data).as_slice()),
@@ -87,7 +87,7 @@ impl Chunk {
         self.length
     }
 
-    fn chunk_type(&self) -> &ChunkType {
+    pub fn chunk_type(&self) -> &ChunkType {
         &self.chunk_type
     }
 
@@ -99,11 +99,11 @@ impl Chunk {
         self.crc
     }
 
-    fn data_as_string(&self) -> Result<String> {
+    pub fn data_as_string(&self) -> Result<String> {
         Ok(String::from_utf8(self.data.clone())?)
     }
 
-    fn as_bytes(&self) -> Vec<u8> {
+    pub fn as_bytes(&self) -> Vec<u8> {
         let mut container = vec![];
         container.extend(self.length.to_be_bytes());
         container.extend(self.chunk_type.bytes());
