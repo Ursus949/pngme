@@ -1,6 +1,8 @@
 use crate::args::Args;
 use crate::args::Commands::{Decode, Encode, Print, Remove};
+use crate::commands::print;
 use clap::Parser;
+use commands::{decode, encode, remove};
 
 mod args;
 mod chunk;
@@ -20,16 +22,14 @@ fn main() -> Result<()> {
             chunk_type,
             message,
         } => {
-            print!("Encode called: {}, {}, {}", path, chunk_type, message);
+            encode(path, chunk_type, message);
         }
-        Decode { path, chunk_type } => {
-            print!("Decode called: {}, {}", path, chunk_type);
-        }
+        Decode { path, chunk_type } => decode(path, chunk_type),
         Remove { path, chunk_type } => {
-            print!("Remove called: {}, {}", path, chunk_type);
+            remove(path, chunk_type);
         }
         Print { path } => {
-            print!("Print called: {}", path);
+            print(path);
         }
     }
     Ok(())
